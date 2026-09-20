@@ -1,0 +1,55 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "Registered hospital patients and staff",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "displayName": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "phoneNumber": { "type": "string" },
+        "role": { "type": "string", "enum": ["patient", "doctor", "admin"] },
+        "healthProfile": { "type": "object", "description": "Clinical health summary, vitals, allergies, medical history" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["id", "email", "displayName", "createdAt"]
+    },
+    "Appointment": {
+      "title": "Clinical Appointment",
+      "description": "Patient outpatient consultation bookings",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "patientName": { "type": "string" },
+        "patientPhone": { "type": "string" },
+        "patientEmail": { "type": "string" },
+        "departmentId": { "type": "string" },
+        "departmentName": { "type": "string" },
+        "doctorId": { "type": "string" },
+        "doctorName": { "type": "string" },
+        "appointmentType": { "type": "string", "enum": ["in-person", "telehealth"] },
+        "date": { "type": "string" },
+        "timeSlot": { "type": "string" },
+        "notes": { "type": "string" },
+        "bookingRef": { "type": "string" },
+        "status": { "type": "string", "enum": ["confirmed", "rescheduled", "cancelled"] },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "userId", "patientName", "patientEmail", "departmentId", "date", "timeSlot", "bookingRef"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "Hospital user records"
+    },
+    "/appointments/{appointmentId}": {
+      "schema": "Appointment",
+      "description": "Scheduled appointments"
+    }
+  }
+}
